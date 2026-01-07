@@ -9,7 +9,11 @@ export default function WeatherPage() {
   const [error, setError] = useState("");
 
   const getWeather = async () => {
-    if (!city.trim()) return;
+    if (!city.trim())
+      {
+        setError("Please enter a city name");
+       return;
+      }
 
     setLoading(true);
     setError("");
@@ -43,34 +47,39 @@ export default function WeatherPage() {
   };
 
   return (
-    <div className="p-6 max-w-md mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Weather Page</h1>
+    
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-200 to-blue-400 ">
+      <div className="bg-white w-[360px] p-6 rounded-xl shadow-lg text-center">
+      <h1 className="text-2xl font-bold mb-4 text-blue-600">Weather Page</h1>
 
       <input
         type="text"
         placeholder="Enter city name"
         value={city}
         onChange={(e) => setCity(e.target.value)}
-        className="border p-2 w-full mb-3 rounded"
+        className="border p-2 w-full rounded mb-3"
       />
 
       <button
         onClick={getWeather}
-        className="bg-blue-500 text-white px-4 py-2 rounded w-full"
-      >
-        Get Weather
+        className="bg-blue-500 hover:bg-blue-600 text-white w-full py-2 rounded transition">
+        
+      {loading ? "Fetching Weather...": "Get Weather"}
+        
+     
       </button>
 
       <div className="mt-4">
-        {loading && <p>Loading...</p>}
         {error && <p className="text-red-500">{error}</p>}
 
         {temperature !== null && !loading && (
-          <p className="text-lg">
-            Current Temperature: <b>{temperature}°C</b>
+
+          <p className="text-lg mt-2">
+            Temperature in <b>{city}</b>:{""}
+            <span className="font-bold">{temperature}°C</span>
           </p>
         )}
-      </div>
-    </div>
-  );
-}
+        </div>
+        </div>
+        </div>
+      );}
